@@ -24,105 +24,6 @@ df.head()
 ```
 
 
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>budget</th>
-      <th>domgross</th>
-      <th>title</th>
-      <th>Response_Json</th>
-      <th>Year</th>
-      <th>imdbRating</th>
-      <th>Metascore</th>
-      <th>imdbVotes</th>
-      <th>Model</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>13000000</td>
-      <td>25682380</td>
-      <td>21 &amp;amp; Over</td>
-      <td>0</td>
-      <td>2008</td>
-      <td>6.8</td>
-      <td>48</td>
-      <td>206513</td>
-      <td>4.912759e+07</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>45658735</td>
-      <td>13414714</td>
-      <td>Dredd 3D</td>
-      <td>0</td>
-      <td>2012</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2.267265e+05</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>20000000</td>
-      <td>53107035</td>
-      <td>12 Years a Slave</td>
-      <td>0</td>
-      <td>2013</td>
-      <td>8.1</td>
-      <td>96</td>
-      <td>537525</td>
-      <td>1.626624e+08</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>61000000</td>
-      <td>75612460</td>
-      <td>2 Guns</td>
-      <td>0</td>
-      <td>2013</td>
-      <td>6.7</td>
-      <td>55</td>
-      <td>173726</td>
-      <td>7.723381e+07</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>40000000</td>
-      <td>95020213</td>
-      <td>42</td>
-      <td>0</td>
-      <td>2013</td>
-      <td>7.5</td>
-      <td>62</td>
-      <td>74170</td>
-      <td>4.151958e+07</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
 ```python
 # Only keep four predictors and transform the with MinMaxScaler
 
@@ -133,95 +34,16 @@ pd_df = pd.DataFrame(transformed, columns = df.columns)
 pd_df.head()
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>domgross</th>
-      <th>budget</th>
-      <th>imdbRating</th>
-      <th>Metascore</th>
-      <th>imdbVotes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.055325</td>
-      <td>0.034169</td>
-      <td>0.839506</td>
-      <td>0.500000</td>
-      <td>0.384192</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.023779</td>
-      <td>0.182956</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.125847</td>
-      <td>0.066059</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.183719</td>
-      <td>0.252847</td>
-      <td>0.827160</td>
-      <td>0.572917</td>
-      <td>0.323196</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.233625</td>
-      <td>0.157175</td>
-      <td>0.925926</td>
-      <td>0.645833</td>
-      <td>0.137984</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
 ## Split the data into a test and train set
 
 
 ```python
 # domgross is the outcome variable
-X = pd_df[['budget','imdbRating','Metascore','imdbVotes']]
-y = pd_df['domgross']
 ```
 
 
 ```python
 #Your code here
-from sklearn.model_selection import train_test_split
-X_train , X_test, y_train, y_test = train_test_split(X, y)
 ```
 
 ## Fit a regression model to the training data and look at the coefficients
@@ -229,29 +51,7 @@ X_train , X_test, y_train, y_test = train_test_split(X, y)
 
 ```python
 #Your code 
-from sklearn.linear_model import *
-linreg = LinearRegression()
-linreg.fit(X_train, y_train)
 ```
-
-
-
-
-    LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
-
-
-
-
-```python
-linreg.coef_
-```
-
-
-
-
-    array([ 0.47485436, -0.25744263,  0.25151536,  0.30856524])
-
-
 
 ## Plot the training predictions against the actual data (y_hat_train vs. y_train)
 
@@ -263,16 +63,8 @@ Let's plot our result for the train data. Because we have multiple predictors, w
 ```python
 import matplotlib.pyplot as plt
 %matplotlib inline
-plt.figure(figsize=(8,5))
-plt.scatter(y_train, linreg.predict(X_train), label='Model')
-plt.plot(y_train, y_train, label='Actual Data')
-plt.title('Model vs Data for Training Set')
-plt.legend();
+# your code here
 ```
-
-
-![png](index_files/index_17_0.png)
-
 
 ## Plot the test predictions against the actual data (y_hat_test vs. y_test)
 
@@ -280,18 +72,8 @@ Do the same thing for the test data.
 
 
 ```python
-import matplotlib.pyplot as plt
-%matplotlib inline
-plt.figure(figsize=(8,5))
-plt.scatter(y_test, linreg.predict(X_test), label='Model')
-plt.plot(y_train, y_train, label='Actual Data')
-plt.title('Model vs Data for Training Set')
-plt.legend();
+# your code here
 ```
-
-
-![png](index_files/index_20_0.png)
-
 
 ## Calculate the bias
 Write a formula to calculate the bias of a models predictions given the actual data: $Bias(\hat{f}(x)) = E[\hat{f}(x)-f(x)]$   
@@ -302,7 +84,7 @@ Write a formula to calculate the bias of a models predictions given the actual d
 ```python
 import numpy as np
 def bias(y, y_hat):
-    return np.mean(y_hat - y)
+    pass
 ```
 
 ## Calculate the variance
@@ -311,7 +93,7 @@ Write a formula to calculate the variance of a model's predictions: $Var(\hat{f}
 
 ```python
 def variance(y_hat):
-    return np.mean([yi**2 for yi in y_hat]) - np.mean(y_hat)**2
+    pass
 ```
 
 ## Use your functions to calculate the bias and variance of your model. Do this seperately for the train and test sets.
@@ -319,28 +101,12 @@ def variance(y_hat):
 
 ```python
 # code for train set bias and variance
-
-b = bias(y_train, linreg.predict(X_train)) 
-v = variance(linreg.predict(X_train)) 
-print('Bias: {} \nVariance: {}'.format(b,v))
 ```
-
-    Bias: 2.901719268906659e-17 
-    Variance: 0.027449331056376085
-
 
 
 ```python
 # code for test set bias and variance
-
-b = bias(y_test, linreg.predict(X_test)) 
-v = variance(linreg.predict(X_test)) 
-print('Bias: {} \nVariance: {}'.format(b,v))
 ```
-
-    Bias: 0.05760433770819166 
-    Variance: 0.009213684542614783
-
 
 ## Describe in words what these numbers can tell you.
 
@@ -359,47 +125,16 @@ What you're essentially doing is taking interactions and creating polynomials at
 
 
 ```python
-from sklearn.preprocessing import PolynomialFeatures
-poly = PolynomialFeatures(3)
-
-X_train_poly = poly.fit_transform(X_train)
-X_test_poly = poly.fit_transform(X_test)
+from sklearn.preprocessing import PolynomialFeatures\
+# your code here
 ```
-
-
-```python
-np.shape(X_train_poly)
-```
-
-
-
-
-    (22, 35)
-
-
 
 ## Plot your overfitted model's training predictions against the actual data
 
 
 ```python
-linreg = LinearRegression()
-linreg.fit(X_train_poly, y_train)
-plt.plot(y_train, y_train, label='Actual Data')
-plt.scatter(y_train, linreg.predict(X_train_poly), label='Model')
-plt.legend()
-plt.title('Model vs Data for Training Set')
+# your code here
 ```
-
-
-
-
-    Text(0.5,1,'Model vs Data for Training Set')
-
-
-
-
-![png](index_files/index_35_1.png)
-
 
 Wow, we almost get a perfect fit!
 
@@ -407,48 +142,22 @@ Wow, we almost get a perfect fit!
 
 
 ```python
-b = bias(y_train, linreg.predict(X_train_poly)) #Your code here
-v = variance(linreg.predict(X_train_poly)) #Your code here
-print('Bias: {} \nVariance: {}'.format(b,v))
+# your code here
 ```
-
-    Bias: -2.5421584029769207e-16 
-    Variance: 0.07230707736656222
-
 
 ## Plot your overfitted model's test predictions against the actual data.
 
 
 ```python
-plt.plot(y_train, y_train, label='Actual Data')
-plt.scatter(y_test, linreg.predict(X_test_poly), label='Model')
-plt.legend()
-plt.title('Model vs Data for Training Set')
+# your code here
 ```
-
-
-
-
-    Text(0.5,1,'Model vs Data for Training Set')
-
-
-
-
-![png](index_files/index_40_1.png)
-
 
 ##  Calculate the bias and variance for the train set.
 
 
 ```python
-b = bias(y_test, linreg.predict(X_test_poly)) #Your code here
-v = variance(linreg.predict(X_test_poly)) #Your code here
-print('Bias: {} \nVariance: {}'.format(b,v))
+# your code here
 ```
-
-    Bias: -0.16998568902304564 
-    Variance: 0.3596092440273582
-
 
 ## Describe what you notice about the bias and variance statistics for your overfit model
 
