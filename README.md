@@ -1,5 +1,5 @@
 
-# Bias-Variance Trade-Off
+# Bias-Variance Trade-Off - Lab
 
 ## Introduction
 
@@ -7,7 +7,8 @@ In this lab, you'll practice your knowledge on the bias-variance trade-off!
 
 ## Objectives
 
-- Understand what the bias/variance trade-off is
+You will be able to: 
+- Look at an example where Polynomial regression leads to overfitting
 - Understand how bias-variance trade-off relates to underfitting and overfitting
 
 ## Let's get started!
