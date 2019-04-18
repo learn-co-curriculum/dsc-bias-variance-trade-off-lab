@@ -13,7 +13,7 @@ You will be able to:
 
 ## Let's get started!
 
-We'll try to predict some movie revenues based on certain factors, such as ratings and movie year.
+In this lab, you'll try to predict some movie revenues based on certain factors, such as ratings and movie year.
 
 
 ```python
@@ -257,8 +257,8 @@ linreg.coef_
 ## Plot the training predictions against the actual data (y_hat_train vs. y_train)
 
 Let's plot our result for the train data. Because we have multiple predictors, we can not simply plot the income variable X on the x-axis and target y on the y-axis. Lets plot 
-- a line showing the diagonal of y_train. The actual y_train values are on this line
-- next, make a scatter plot that takes the actual y_train on the x-axis and the predictions using the model on the y-axis. You will see points scattered around the line. The horizontal distances between the points and the lines are the errors.
+- A line showing the diagonal of y_train. The actual y_train values are on this line
+- Next, make a scatter plot that takes the actual y_train on the x-axis and the predictions using the model on the y-axis. You will see points scattered around the line. The horizontal distances between the points and the lines are the errors.
 
 
 ```python
@@ -295,7 +295,7 @@ plt.legend();
 
 
 ## Calculate the bias
-Write a formula to calculate the bias of a models predictions given the actual data: $Bias(\hat{f}(x)) = E[\hat{f}(x)-f(x)]$   
+Create a function `bias` to calculate the bias of a models predictions given the actual data: $Bias(\hat{f}(x)) = E[\hat{f}(x)-f(x)]$   
 (The expected value can simply be taken as the mean or average value.)  
 
 
@@ -307,7 +307,7 @@ def bias(y, y_hat):
 ```
 
 ## Calculate the variance
-Write a formula to calculate the variance of a model's predictions: $Var(\hat{f}(x)) = E[\hat{f}(x)^2] - \big(E[\hat{f}(x)]\big)^2$
+Create a function `variance` to calculate the variance of a model's predictions: $Var(\hat{f}(x)) = E[\hat{f}(x)^2] - \big(E[\hat{f}(x)]\big)^2$
 
 
 ```python
@@ -315,7 +315,7 @@ def variance(y_hat):
     return np.mean([yi**2 for yi in y_hat]) - np.mean(y_hat)**2
 ```
 
-## Use your functions to calculate the bias and variance of your model. Do this seperately for the train and test sets.
+## Use your functions to calculate the bias and variance of your model. Do this separately for the train and test sets.
 
 
 ```python
@@ -345,7 +345,21 @@ print('Bias: {} \nVariance: {}'.format(b,v))
 
 ## Describe in words what these numbers can tell you.
 
-Your description here (this cell is formatted using markdown)
+
+```python
+"""
+These numbers indicate that the bias increases, but the variance
+decreases. This indicates that the model is not overfitting, however
+it might be overfitting.
+"""
+```
+
+
+
+
+    '\nThese numbers indicate that the bias increases, but the variance\ndecreases. This indicates that the model is not overfitting, however\nit might be overfitting.\n'
+
+
 
 ## Overfit a new model by creating additional features by raising current features to various powers.
 
@@ -461,4 +475,4 @@ In this lab we went from 4 predictors to 35 by adding polynomials and interactio
 
 ## Summary
 
-This lab gave you insight in how bias and variance change for a training and test set by using a pretty "simple" model, and a very complex model. 
+This lab gave you insight into how bias and variance change for a training and a test set by using a pretty "simple" model, and a very complex model. 
