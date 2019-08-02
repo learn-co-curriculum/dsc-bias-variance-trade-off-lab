@@ -263,13 +263,13 @@ X_train , X_test, y_train, y_test = train_test_split(X, y)
 
 
 ```python
-#Your code 
+# Your code 
 ```
 
 
 ```python
 # __SOLUTION__ 
-#Your code 
+# Your code 
 from sklearn.linear_model import *
 linreg = LinearRegression()
 linreg.fit(X_train, y_train)
@@ -395,6 +395,9 @@ def variance(y_hat):
 
 ```python
 # code for train set bias and variance
+
+# Bias: 2.901719268906659e-17 
+# Variance: 0.027449331056376085
 ```
 
 
@@ -414,6 +417,9 @@ print('Bias: {} \nVariance: {}'.format(b,v))
 
 ```python
 # code for test set bias and variance
+
+# Bias: 0.05760433770819166 
+# Variance: 0.009213684542614783
 ```
 
 
@@ -432,9 +438,10 @@ print('Bias: {} \nVariance: {}'.format(b,v))
 
 ## Describe in words what these numbers can tell you.
 
-Your description here (this cell is formatted using markdown)
 
-## Overfit a new model by creating additional features by raising current features to various powers.
+```python
+# Your description here
+```
 
 
 ```python
@@ -446,12 +453,7 @@ it might be overfitting.
 """
 ```
 
-
-
-
-    '\nThese numbers indicate that the bias increases, but the variance\ndecreases. This indicates that the model is not overfitting, however\nit might be overfitting.\n'
-
-
+## Overfit a new model by creating additional features by raising current features to various powers.
 
 Use `PolynomialFeatures` with degree 3. 
 
@@ -468,8 +470,6 @@ from sklearn.preprocessing import PolynomialFeatures\
 # your code here
 ```
 
-## Plot your overfitted model's training predictions against the actual data
-
 
 ```python
 # __SOLUTION__ 
@@ -478,11 +478,6 @@ poly = PolynomialFeatures(3)
 
 X_train_poly = poly.fit_transform(X_train)
 X_test_poly = poly.fit_transform(X_test)
-```
-
-
-```python
-# your code here
 ```
 
 
@@ -498,9 +493,12 @@ np.shape(X_train_poly)
 
 
 
-Wow, we almost get a perfect fit!
+## Plot your overfitted model's training predictions against the actual data
 
-## Calculate the bias and variance for the train set
+
+```python
+# your code here
+```
 
 
 ```python
@@ -521,19 +519,19 @@ plt.title('Model vs Data for Training Set')
 
 
 
-![png](index_files/index_52_1.png)
+![png](index_files/index_50_1.png)
 
 
+Wow, we almost get a perfect fit!
 
-```python
-# your code here
-```
-
-## Plot your overfitted model's test predictions against the actual data.
+## Calculate the bias and variance for the train set
 
 
 ```python
 # your code here
+
+# Bias: -2.5421584029769207e-16 
+# Variance: 0.07230707736656222
 ```
 
 
@@ -548,7 +546,7 @@ print('Bias: {} \nVariance: {}'.format(b,v))
     Variance: 0.07230707736656222
 
 
-##  Calculate the bias and variance for the train set.
+## Plot your overfitted model's test predictions against the actual data.
 
 
 ```python
@@ -572,12 +570,18 @@ plt.title('Model vs Data for Training Set')
 
 
 
-![png](index_files/index_59_1.png)
+![png](index_files/index_57_1.png)
 
 
-## Describe what you notice about the bias and variance statistics for your overfit model
+##  Calculate the bias and variance for the test set.
 
-Your description here (this cell is formatted using markdown)
+
+```python
+# your code here
+
+# Bias: -0.16998568902304564 
+# Variance: 0.3596092440273582
+```
 
 
 ```python
@@ -590,6 +594,19 @@ print('Bias: {} \nVariance: {}'.format(b,v))
     Bias: -0.16998568902304564 
     Variance: 0.3596092440273582
 
+
+## Describe what you notice about the bias and variance statistics for your overfit model
+
+
+```python
+# Your description here
+```
+
+
+```python
+# __SOLUTION__
+# The bias and variance for the test set both increased drastically in the overfit model.
+```
 
 ## Level Up - Optional
 
