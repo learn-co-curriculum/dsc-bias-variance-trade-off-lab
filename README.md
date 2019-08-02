@@ -229,7 +229,7 @@ X_train , X_test, y_train, y_test = train_test_split(X, y)
 
 
 ```python
-#Your code 
+# Your code 
 from sklearn.linear_model import *
 linreg = LinearRegression()
 linreg.fit(X_train, y_train)
@@ -354,13 +354,6 @@ it might be overfitting.
 """
 ```
 
-
-
-
-    '\nThese numbers indicate that the bias increases, but the variance\ndecreases. This indicates that the model is not overfitting, however\nit might be overfitting.\n'
-
-
-
 ## Overfit a new model by creating additional features by raising current features to various powers.
 
 Use `PolynomialFeatures` with degree 3. 
@@ -452,7 +445,7 @@ plt.title('Model vs Data for Training Set')
 ![png](index_files/index_40_1.png)
 
 
-##  Calculate the bias and variance for the train set.
+##  Calculate the bias and variance for the test set.
 
 
 ```python
@@ -467,7 +460,10 @@ print('Bias: {} \nVariance: {}'.format(b,v))
 
 ## Describe what you notice about the bias and variance statistics for your overfit model
 
-The bias and variance for the test set both increased drastically in the overfit model.
+
+```python
+# The bias and variance for the test set both increased drastically in the overfit model.
+```
 
 ## Level Up - Optional
 
