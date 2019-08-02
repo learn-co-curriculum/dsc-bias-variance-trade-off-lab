@@ -51,7 +51,12 @@ pd_df.head()
 
 
 ```python
-#Your code 
+# Your code 
+```
+
+
+```python
+
 ```
 
 ## Plot the training predictions against the actual data (y_hat_train vs. y_train)
@@ -102,16 +107,25 @@ def variance(y_hat):
 
 ```python
 # code for train set bias and variance
+
+# Bias: 2.901719268906659e-17 
+# Variance: 0.027449331056376085
 ```
 
 
 ```python
 # code for test set bias and variance
+
+# Bias: 0.05760433770819166 
+# Variance: 0.009213684542614783
 ```
 
 ## Describe in words what these numbers can tell you.
 
-Your description here (this cell is formatted using markdown)
+
+```python
+# Your description here
+```
 
 ## Overfit a new model by creating additional features by raising current features to various powers.
 
@@ -144,6 +158,9 @@ Wow, we almost get a perfect fit!
 
 ```python
 # your code here
+
+# Bias: -2.5421584029769207e-16 
+# Variance: 0.07230707736656222
 ```
 
 ## Plot your overfitted model's test predictions against the actual data.
@@ -153,16 +170,22 @@ Wow, we almost get a perfect fit!
 # your code here
 ```
 
-##  Calculate the bias and variance for the train set.
+##  Calculate the bias and variance for the test set.
 
 
 ```python
 # your code here
+
+# Bias: -0.16998568902304564 
+# Variance: 0.3596092440273582
 ```
 
 ## Describe what you notice about the bias and variance statistics for your overfit model
 
-Your description here (this cell is formatted using markdown)
+
+```python
+# Your description here
+```
 
 ## Level Up - Optional
 
