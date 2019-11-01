@@ -324,13 +324,34 @@ linreg.fit(X_train_scaled, y_train)
 
 
 
+Use the model to make predictions on both the training and test sets: 
+
+
+```python
+# Training set predictions
+lm_train_predictions = None
+
+# Test set predictions 
+lm_test_predictions = None
+```
+
+
+```python
+# __SOLUTION__ 
+# Training set predictions
+lm_train_predictions = linreg.predict(X_train_scaled)
+
+# Test set predictions 
+lm_test_predictions = linreg.predict(X_test_scaled)
+```
+
 Plot predictions for the training set against the actual data: 
 
 
 ```python
 # Run this cell - vertical distance between the points and the line denote the errors
 plt.figure(figsize=(8, 5))
-plt.scatter(y_train, linreg.predict(X_train_scaled), label='Model')
+plt.scatter(y_train, lm_train_predictions, label='Model')
 plt.plot(y_train, y_train, label='Actual data')
 plt.title('Model vs data for training set')
 plt.legend();
@@ -341,14 +362,14 @@ plt.legend();
 # __SOLUTION__ 
 # Run this cell - vertical distance between the points and the line denote the errors
 plt.figure(figsize=(8, 5))
-plt.scatter(y_train, linreg.predict(X_train_scaled), label='Model')
+plt.scatter(y_train, lm_train_predictions, label='Model')
 plt.plot(y_train, y_train, label='Actual data')
 plt.title('Model vs data for training set')
 plt.legend();
 ```
 
 
-![png](index_files/index_26_0.png)
+![png](index_files/index_29_0.png)
 
 
 Plot predictions for the test set against the actual data: 
@@ -357,7 +378,7 @@ Plot predictions for the test set against the actual data:
 ```python
 # Run this cell - vertical distance between the points and the line denote the errors
 plt.figure(figsize=(8, 5))
-plt.scatter(y_test, linreg.predict(X_test_scaled), label='Model')
+plt.scatter(y_test, lm_test_predictions, label='Model')
 plt.plot(y_test, y_test, label='Actual data')
 plt.title('Model vs data for test set')
 plt.legend();
@@ -368,14 +389,14 @@ plt.legend();
 # __SOLUTION__ 
 # Run this cell - vertical distance between the points and the line denote the errors
 plt.figure(figsize=(8, 5))
-plt.scatter(y_test, linreg.predict(X_test_scaled), label='Model')
+plt.scatter(y_test, lm_test_predictions, label='Model')
 plt.plot(y_test, y_test, label='Actual data')
 plt.title('Model vs data for test set')
 plt.legend();
 ```
 
 
-![png](index_files/index_29_0.png)
+![png](index_files/index_32_0.png)
 
 
 ## Bias
@@ -431,8 +452,8 @@ print('Train bias: {} \nTrain variance: {}'.format(b, v))
 ```python
 # __SOLUTION__ 
 # Bias and variance for training set 
-b = bias(y_train, linreg.predict(X_train_scaled)) 
-v = variance(linreg.predict(X_train_scaled)) 
+b = bias(y_train, lm_train_predictions) 
+v = variance(lm_train_predictions) 
 print('Train bias: {} \nTrain variance: {}'.format(b, v))
 ```
 
@@ -455,8 +476,8 @@ print('Test bias: {} \nTest variance: {}'.format(b, v))
 ```python
 # __SOLUTION__ 
 # Bias and variance for test set 
-b = bias(y_test, linreg.predict(X_test_scaled)) 
-v = variance(linreg.predict(X_test_scaled)) 
+b = bias(y_test, lm_test_predictions) 
+v = variance(lm_test_predictions) 
 print('Test bias: {} \nTest variance: {}'.format(b, v))
 ```
 
@@ -517,14 +538,15 @@ Fit a regression model to the training data:
 
 ```python
 # Your code here
-linreg = None
+polyreg = LinearRegression()
+
 ```
 
 
 ```python
 # __SOLUTION__ 
-linreg = LinearRegression()
-linreg.fit(X_train_poly, y_train)
+polyreg = LinearRegression()
+polyreg.fit(X_train_poly, y_train)
 ```
 
 
@@ -534,13 +556,34 @@ linreg.fit(X_train_poly, y_train)
 
 
 
+Use the model to make predictions on both the training and test sets: 
+
+
+```python
+# Training set predictions
+poly_train_predictions = None
+
+# Test set predictions 
+poly_test_predictions = None
+```
+
+
+```python
+# __SOLUTION__ 
+# Training set predictions
+poly_train_predictions = polyreg.predict(X_train_poly)
+
+# Test set predictions 
+poly_test_predictions = polyreg.predict(X_test_poly)
+```
+
 Plot predictions for the training set against the actual data: 
 
 
 ```python
 # Run this cell - vertical distance between the points and the line denote the errors
 plt.figure(figsize=(8, 5))
-plt.scatter(y_train, linreg.predict(X_train_poly), label='Model')
+plt.scatter(y_train, poly_train_predictions, label='Model')
 plt.plot(y_train, y_train, label='Actual data')
 plt.title('Model vs data for training set')
 plt.legend();
@@ -551,14 +594,14 @@ plt.legend();
 # __SOLUTION__ 
 # Run this cell - vertical distance between the points and the line denote the errors
 plt.figure(figsize=(8, 5))
-plt.scatter(y_train, linreg.predict(X_train_poly), label='Model')
+plt.scatter(y_train, poly_train_predictions, label='Model')
 plt.plot(y_train, y_train, label='Actual data')
 plt.title('Model vs data for training set')
 plt.legend();
 ```
 
 
-![png](index_files/index_52_0.png)
+![png](index_files/index_58_0.png)
 
 
 Plot predictions for the test set against the actual data: 
@@ -567,7 +610,7 @@ Plot predictions for the test set against the actual data:
 ```python
 # Run this cell - vertical distance between the points and the line denote the errors
 plt.figure(figsize=(8, 5))
-plt.scatter(y_test, linreg.predict(X_test_poly), label='Model')
+plt.scatter(y_test, poly_test_predictions, label='Model')
 plt.plot(y_test, y_test, label='Actual data')
 plt.title('Model vs data for test set')
 plt.legend();
@@ -578,14 +621,14 @@ plt.legend();
 # __SOLUTION__ 
 # Run this cell - vertical distance between the points and the line denote the errors
 plt.figure(figsize=(8, 5))
-plt.scatter(y_test, linreg.predict(X_test_poly), label='Model')
+plt.scatter(y_test, poly_test_predictions, label='Model')
 plt.plot(y_test, y_test, label='Actual data')
 plt.title('Model vs data for test set')
 plt.legend();
 ```
 
 
-![png](index_files/index_55_0.png)
+![png](index_files/index_61_0.png)
 
 
 Calculate the bias and variance for the training set: 
@@ -605,8 +648,8 @@ print('Train bias: {} \nTrain variance: {}'.format(b, v))
 ```python
 # __SOLUTION__ 
 # Bias and variance for training set 
-b = bias(y_train, linreg.predict(X_train_poly))
-v = variance(linreg.predict(X_train_poly))
+b = bias(y_train, poly_train_predictions)
+v = variance(poly_train_predictions)
 print('Train bias: {} \nTrain variance: {}'.format(b, v))
 ```
 
@@ -631,8 +674,8 @@ print('Test bias: {} \nTest variance: {}'.format(b, v))
 ```python
 # __SOLUTION__ 
 # Bias and variance for test set 
-b = bias(y_test, linreg.predict(X_test_poly)) 
-v = variance(linreg.predict(X_test_poly)) 
+b = bias(y_test, poly_test_predictions) 
+v = variance(poly_test_predictions) 
 print('Test bias: {} \nTest variance: {}'.format(b, v))
 ```
 
