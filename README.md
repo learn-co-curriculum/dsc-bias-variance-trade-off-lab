@@ -23,7 +23,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import PolynomialFeatures
-from sklearn.linear_model import *
+from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 %matplotlib inline
 
@@ -153,7 +153,7 @@ df.head()
 
 
 
-Subset the `df` DataFrame to only keep the `'domgross'`, `'budget'`, `'imdbRating'`, `'Metascore'`, and `'imdbVotes'` columns. Use the `MinMaxScaler` to scale all these columns. 
+Subset the `df` DataFrame to only keep the `'domgross'`, `'budget'`, `'imdbRating'`, `'Metascore'`, and `'imdbVotes'` columns. 
 
 
 ```python
@@ -166,25 +166,7 @@ df = None
 # __SOLUTION__ 
 # Subset the DataFrame
 df = df[['domgross', 'budget', 'imdbRating', 'Metascore', 'imdbVotes']]
-```
-
-
-```python
-# Transform with MinMaxScaler
-scale = None
-transformed = None
-pd_df = pd.DataFrame(transformed, columns=df.columns)
-pd_df.head()
-```
-
-
-```python
-# __SOLUTION__ 
-# Transform with MinMaxScaler
-scale = MinMaxScaler()
-transformed = scale.fit_transform(df)
-pd_df = pd.DataFrame(transformed, columns=df.columns)
-pd_df.head()
+df.head()
 ```
 
 
@@ -218,43 +200,43 @@ pd_df.head()
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.055325</td>
-      <td>0.034169</td>
-      <td>0.839506</td>
-      <td>0.500000</td>
-      <td>0.384192</td>
+      <td>25682380</td>
+      <td>13000000</td>
+      <td>6.8</td>
+      <td>48</td>
+      <td>206513</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.023779</td>
-      <td>0.182956</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>13414714</td>
+      <td>45658735</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.125847</td>
-      <td>0.066059</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
-      <td>1.000000</td>
+      <td>53107035</td>
+      <td>20000000</td>
+      <td>8.1</td>
+      <td>96</td>
+      <td>537525</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.183719</td>
-      <td>0.252847</td>
-      <td>0.827160</td>
-      <td>0.572917</td>
-      <td>0.323196</td>
+      <td>75612460</td>
+      <td>61000000</td>
+      <td>6.7</td>
+      <td>55</td>
+      <td>173726</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.233625</td>
-      <td>0.157175</td>
-      <td>0.925926</td>
-      <td>0.645833</td>
-      <td>0.137984</td>
+      <td>95020213</td>
+      <td>40000000</td>
+      <td>7.5</td>
+      <td>62</td>
+      <td>74170</td>
     </tr>
   </tbody>
 </table>
@@ -281,13 +263,45 @@ X_train , X_test, y_train, y_test = None
 ```python
 # __SOLUTION__ 
 # domgross is the outcome variable
-X = pd_df[['budget', 'imdbRating', 'Metascore', 'imdbVotes']]
-y = pd_df['domgross']
+X = df[['budget', 'imdbRating', 'Metascore', 'imdbVotes']]
+y = df['domgross']
 
 X_train , X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 ```
 
-## Fit a regression model to the training data and look at the coefficients
+Use the `MinMaxScaler` to scale the training set. Remember you can fit and transform in a single method using `.fit_transform()`.  
+
+
+```python
+# Transform with MinMaxScaler
+scaler = None
+X_train_scaled = None
+```
+
+
+```python
+# __SOLUTION__ 
+# Transform with MinMaxScaler
+scaler = MinMaxScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+```
+
+Transform the test data (`X_test`) using the same `scaler`:  
+
+
+```python
+# Scale the test set
+X_test_scaled = None
+```
+
+
+```python
+# __SOLUTION__ 
+# Scale the test set
+X_test_scaled = scaler.transform(X_test)
+```
+
+## Fit a regression model to the training data
 
 
 ```python
@@ -300,59 +314,68 @@ linreg = None
 # __SOLUTION__ 
 # Your code 
 linreg = LinearRegression()
-linreg.fit(X_train, y_train)
-linreg.coef_
+linreg.fit(X_train_scaled, y_train)
 ```
 
 
 
 
-    array([ 0.48419438, -0.2321452 ,  0.30774948,  0.18293653])
+    LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
 
 
 
-Calculate the mean squared error of the training set using this model: 
-
-
-```python
-# MSE of training set
-
-```
+Plot predictions for the training set against the actual data: 
 
 
 ```python
-# __SOLUTION__ 
-# MSE of training set
-mean_squared_error(y_train, linreg.predict(X_train))
-```
-
-
-
-
-    0.026366234823542414
-
-
-
-Calculate the mean squared error of the test set using this model: 
-
-
-```python
-# MSE of test set
-
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_train, linreg.predict(X_train_scaled), label='Model')
+plt.plot(y_train, y_train, label='Actual data')
+plt.title('Model vs data for training set')
+plt.legend();
 ```
 
 
 ```python
 # __SOLUTION__ 
-# MSE of test set
-mean_squared_error(y_test, linreg.predict(X_test))
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_train, linreg.predict(X_train_scaled), label='Model')
+plt.plot(y_train, y_train, label='Actual data')
+plt.title('Model vs data for training set')
+plt.legend();
 ```
 
 
+![png](index_files/index_26_0.png)
 
 
-    0.06307564024771552
+Plot predictions for the test set against the actual data: 
 
+
+```python
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_test, linreg.predict(X_test_scaled), label='Model')
+plt.plot(y_test, y_test, label='Actual data')
+plt.title('Model vs data for test set')
+plt.legend();
+```
+
+
+```python
+# __SOLUTION__ 
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_test, linreg.predict(X_test_scaled), label='Model')
+plt.plot(y_test, y_test, label='Actual data')
+plt.title('Model vs data for test set')
+plt.legend();
+```
+
+
+![png](index_files/index_29_0.png)
 
 
 ## Bias
@@ -398,23 +421,23 @@ def variance(y_hat):
 # Bias and variance for training set 
 b = None
 v = None
-print('Bias: {} \nVariance: {}'.format(b, v))
+print('Train bias: {} \nTrain variance: {}'.format(b, v))
 
-# Bias: 2.901719268906659e-17 
-# Variance: 0.027449331056376085
+# Train bias: -8.127906105735085e-09 
+# Train variance: 3406811040986517.0
 ```
 
 
 ```python
 # __SOLUTION__ 
 # Bias and variance for training set 
-b = bias(y_train, linreg.predict(X_train)) 
-v = variance(linreg.predict(X_train)) 
-print('Bias: {} \nVariance: {}'.format(b, v))
+b = bias(y_train, linreg.predict(X_train_scaled)) 
+v = variance(linreg.predict(X_train_scaled)) 
+print('Train bias: {} \nTrain variance: {}'.format(b, v))
 ```
 
-    Bias: 3.9110129276568017e-17 
-    Variance: 0.02252739508558451
+    Train bias: -8.127906105735085e-09 
+    Train variance: 3406811040986517.0
 
 
 
@@ -422,52 +445,28 @@ print('Bias: {} \nVariance: {}'.format(b, v))
 # Bias and variance for test set 
 b = None
 v = None
-print('Bias: {} \nVariance: {}'.format(b, v))
+print('Test bias: {} \nTest variance: {}'.format(b, v))
 
-# Bias: 0.05760433770819166 
-# Variance: 0.009213684542614783
+# Test bias: -10982393.918069275 
+# Test variance: 1518678846127932.0
 ```
 
 
 ```python
 # __SOLUTION__ 
 # Bias and variance for test set 
-b = bias(y_test, linreg.predict(X_test)) 
-v = variance(linreg.predict(X_test)) 
-print('Bias: {} \nVariance: {}'.format(b, v))
+b = bias(y_test, linreg.predict(X_test_scaled)) 
+v = variance(linreg.predict(X_test_scaled)) 
+print('Test bias: {} \nTest variance: {}'.format(b, v))
 ```
 
-    Bias: -0.02824089667424158 
-    Variance: 0.0100422001582268
-
-
-## Interpret the results
-
-
-```python
-# Your description here
-```
-
-
-```python
-# __SOLUTION__ 
-"""
-These numbers indicate that the bias increases, but the variance
-decreases. This indicates that the model is not overfitting, however
-it might be overfitting.
-"""
-```
-
-
-
-
-    '\nThese numbers indicate that the bias increases, but the variance\ndecreases. This indicates that the model is not overfitting, however\nit might be overfitting.\n'
-
+    Test bias: -10982393.918069275 
+    Test variance: 1518678846127932.0
 
 
 ## Overfit a new model 
 
-Use `PolynomialFeatures` with degree 3 and transform `X_train` and `X_test`. 
+Use `PolynomialFeatures` with degree 3 and transform `X_train_scaled` and `X_test_scaled`. 
 
 **Important note:** By including this, you don't only take polynomials of single variables, but you also combine variables, eg:
 
@@ -490,8 +489,8 @@ X_test_poly = None
 # __SOLUTION__ 
 poly = PolynomialFeatures(3)
 
-X_train_poly = poly.fit_transform(X_train)
-X_test_poly = poly.fit_transform(X_test)
+X_train_poly = poly.fit_transform(X_train_scaled)
+X_test_poly = poly.fit_transform(X_test_scaled)
 ```
 
 
@@ -519,7 +518,6 @@ Fit a regression model to the training data:
 ```python
 # Your code here
 linreg = None
-
 ```
 
 
@@ -536,47 +534,58 @@ linreg.fit(X_train_poly, y_train)
 
 
 
-Calculate the mean squared error of the training set using this model:
+Plot predictions for the training set against the actual data: 
 
 
 ```python
-# MSE of training set 
-
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_train, linreg.predict(X_train_poly), label='Model')
+plt.plot(y_train, y_train, label='Actual data')
+plt.title('Model vs data for training set')
+plt.legend();
 ```
 
 
 ```python
 # __SOLUTION__ 
-# MSE of training set
-mean_squared_error(y_train, linreg.predict(X_train_poly))
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_train, linreg.predict(X_train_poly), label='Model')
+plt.plot(y_train, y_train, label='Actual data')
+plt.title('Model vs data for training set')
+plt.legend();
 ```
 
 
+![png](index_files/index_52_0.png)
 
 
-    1.7542037443289215e-29
-
-
-
-Calculate the mean squared error of the test set using this model:
+Plot predictions for the test set against the actual data: 
 
 
 ```python
-# MSE of test set
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_test, linreg.predict(X_test_poly), label='Model')
+plt.plot(y_test, y_test, label='Actual data')
+plt.title('Model vs data for test set')
+plt.legend();
 ```
 
 
 ```python
 # __SOLUTION__ 
-# MSE of test set
-mean_squared_error(y_test, linreg.predict(X_test_poly))
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_test, linreg.predict(X_test_poly), label='Model')
+plt.plot(y_test, y_test, label='Actual data')
+plt.title('Model vs data for test set')
+plt.legend();
 ```
 
 
-
-
-    0.49830553496326574
-
+![png](index_files/index_55_0.png)
 
 
 Calculate the bias and variance for the training set: 
@@ -586,9 +595,10 @@ Calculate the bias and variance for the training set:
 # Bias and variance for training set 
 b = None 
 v = None 
-print('Bias: {} \nVariance: {}'.format(b, v))
-# Bias: -2.5421584029769207e-16 
-# Variance: 0.07230707736656222
+print('Train bias: {} \nTrain variance: {}'.format(b, v))
+
+# Train bias: 3.5898251966996625e-07 
+# Train variance: 7394168636697528.0
 ```
 
 
@@ -597,11 +607,11 @@ print('Bias: {} \nVariance: {}'.format(b, v))
 # Bias and variance for training set 
 b = bias(y_train, linreg.predict(X_train_poly))
 v = variance(linreg.predict(X_train_poly))
-print('Bias: {} \nVariance: {}'.format(b, v))
+print('Train bias: {} \nTrain variance: {}'.format(b, v))
 ```
 
-    Bias: -3.8952427142388303e-16 
-    Variance: 0.0488936299091263
+    Train bias: 3.5898251966996625e-07 
+    Train variance: 7394168636697528.0
 
 
 Calculate the bias and variance for the test set: 
@@ -611,7 +621,10 @@ Calculate the bias and variance for the test set:
 # Bias and variance for test set 
 b = None 
 v = None 
-print('Bias: {} \nVariance: {}'.format(b, v))
+print('Test bias: {} \nTest variance: {}'.format(b, v))
+
+# Test bias: -68166032.47666144 
+# Test variance: 4.798244829435879e+16
 ```
 
 
@@ -620,11 +633,11 @@ print('Bias: {} \nVariance: {}'.format(b, v))
 # Bias and variance for test set 
 b = bias(y_test, linreg.predict(X_test_poly)) 
 v = variance(linreg.predict(X_test_poly)) 
-print('Bias: {} \nVariance: {}'.format(b, v))
+print('Test bias: {} \nTest variance: {}'.format(b, v))
 ```
 
-    Bias: -0.17528690868564342 
-    Variance: 0.3172819263811148
+    Test bias: -68166032.47666144 
+    Test variance: 4.798244829435879e+16
 
 
 ## Interpret the overfit model
@@ -637,7 +650,8 @@ print('Bias: {} \nVariance: {}'.format(b, v))
 
 ```python
 # __SOLUTION__
-# The bias and variance for the test set both increased drastically in the overfit model.
+# The training predictions from the second model perfectly match the actual data points - which indicates overfitting.  
+# The bias and variance for the test set both increased drastically for this overfit model.
 ```
 
 ## Level Up (Optional)
