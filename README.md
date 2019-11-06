@@ -1,90 +1,123 @@
 
-# Bias-Variance Trade-Off - Lab
+# Bias-Variance Tradeoff - Lab
 
 ## Introduction
 
-In this lab, you'll practice your knowledge on the bias-variance trade-off!
+In this lab, you'll practice the concepts you learned in the last lesson, bias-variance tradeoff. 
 
 ## Objectives
 
-You will be able to: 
-- Look at an example where Polynomial regression leads to overfitting
-- Understand how bias-variance trade-off relates to underfitting and overfitting
+In this lab you will: 
+
+- Demonstrate the tradeoff between bias and variance by way of fitting a machine learning model 
 
 ## Let's get started!
 
-In this lab, you'll try to predict some movie revenues based on certain factors, such as ratings and movie year.
+In this lab, you'll try to predict some movie revenues based on certain factors, such as ratings and movie year. Start by running the following cell which imports all the necessary functions and the dataset: 
 
 
 ```python
+import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+%matplotlib inline
 
-df = pd.read_excel('./movie_data_detailed_with_ols.xlsx')
+df = pd.read_excel('movie_data_detailed_with_ols.xlsx')
 df.head()
 ```
 
+Subset the `df` DataFrame to only keep the `'domgross'`, `'budget'`, `'imdbRating'`, `'Metascore'`, and `'imdbVotes'` columns. 
+
 
 ```python
-# Only keep four predictors and transform the with MinMaxScaler
-
-scale = MinMaxScaler()
-df = df[[ "domgross", "budget", "imdbRating", "Metascore", "imdbVotes"]]
-transformed = scale.fit_transform(df)
-pd_df = pd.DataFrame(transformed, columns = df.columns)
-pd_df.head()
+# Subset the DataFrame
+df = None
 ```
 
-## Split the data into a test and train set
+## Split the data
+
+
+- First, assign the predictors to `X` and the outcome variable, `'domgross'` to `y` 
+- Split the data into training and test sets. Set the seed to 42 and the `test_size` to 0.25 
 
 
 ```python
 # domgross is the outcome variable
+X = None
+y = None
+
+X_train , X_test, y_train, y_test = None
 ```
+
+Use the `MinMaxScaler` to scale the training set. Remember you can fit and transform in a single method using `.fit_transform()`.  
 
 
 ```python
-#Your code here
+# Transform with MinMaxScaler
+scaler = None
+X_train_scaled = None
 ```
 
-## Fit a regression model to the training data and look at the coefficients
+Transform the test data (`X_test`) using the same `scaler`:  
+
+
+```python
+# Scale the test set
+X_test_scaled = None
+```
+
+## Fit a regression model to the training data
 
 
 ```python
 # Your code 
+linreg = None
 ```
+
+Use the model to make predictions on both the training and test sets: 
 
 
 ```python
+# Training set predictions
+lm_train_predictions = None
 
+# Test set predictions 
+lm_test_predictions = None
 ```
 
-## Plot the training predictions against the actual data (y_hat_train vs. y_train)
-
-Let's plot our result for the train data. Because we have multiple predictors, we can not simply plot the income variable X on the x-axis and target y on the y-axis. Lets plot 
-- A line showing the diagonal of y_train. The actual y_train values are on this line
-- Next, make a scatter plot that takes the actual y_train on the x-axis and the predictions using the model on the y-axis. You will see points scattered around the line. The vertical distances between the points and the lines are the errors.
+Plot predictions for the training set against the actual data: 
 
 
 ```python
-import matplotlib.pyplot as plt
-%matplotlib inline
-# your code here
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_train, lm_train_predictions, label='Model')
+plt.plot(y_train, y_train, label='Actual data')
+plt.title('Model vs data for training set')
+plt.legend();
 ```
 
-## Plot the test predictions against the actual data (y_hat_test vs. y_test)
-
-Do the same thing for the test data.
+Plot predictions for the test set against the actual data: 
 
 
 ```python
-# your code here
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_test, lm_test_predictions, label='Model')
+plt.plot(y_test, y_test, label='Actual data')
+plt.title('Model vs data for test set')
+plt.legend();
 ```
 
-## Calculate the bias
-Create a function `bias` to calculate the bias of a models predictions given the actual data: $Bias(\hat{f}(x)) = E[\hat{f}(x)-f(x)]$   
+## Bias
+
+Create a function `bias()` to calculate the bias of a model's predictions given the actual data: $Bias(\hat{f}(x)) = E[\hat{f}(x)-f(x)]$   
 (The expected value can simply be taken as the mean or average value.)  
-
 
 
 ```python
@@ -93,8 +126,8 @@ def bias(y, y_hat):
     pass
 ```
 
-## Calculate the variance
-Create a function `variance` to calculate the variance of a model's predictions: $Var(\hat{f}(x)) = E[\hat{f}(x)^2] - \big(E[\hat{f}(x)]\big)^2$
+## Variance
+Create a function `variance()` to calculate the variance of a model's predictions: $Var(\hat{f}(x)) = E[\hat{f}(x)^2] - \big(E[\hat{f}(x)]\big)^2$
 
 
 ```python
@@ -102,95 +135,136 @@ def variance(y_hat):
     pass
 ```
 
-## Use your functions to calculate the bias and variance of your model. Do this separately for the train and test sets.
+## Calculate bias and variance
 
 
 ```python
-# code for train set bias and variance
+# Bias and variance for training set 
+b = None
+v = None
+print('Train bias: {} \nTrain variance: {}'.format(b, v))
 
-# Bias: 2.901719268906659e-17 
-# Variance: 0.027449331056376085
+# Train bias: -8.127906105735085e-09 
+# Train variance: 3406811040986517.0
 ```
 
 
 ```python
-# code for test set bias and variance
+# Bias and variance for test set 
+b = None
+v = None
+print('Test bias: {} \nTest variance: {}'.format(b, v))
 
-# Bias: 0.05760433770819166 
-# Variance: 0.009213684542614783
+# Test bias: -10982393.918069275 
+# Test variance: 1518678846127932.0
 ```
 
-## Describe in words what these numbers can tell you.
+## Overfit a new model 
 
-
-```python
-# Your description here
-```
-
-## Overfit a new model by creating additional features by raising current features to various powers.
-
-Use `PolynomialFeatures` with degree 3. 
+Use `PolynomialFeatures` with degree 3 and transform `X_train_scaled` and `X_test_scaled`. 
 
 **Important note:** By including this, you don't only take polynomials of single variables, but you also combine variables, eg:
 
 $ \text{Budget} * \text{MetaScore} ^ 2 $
 
-What you're essentially doing is taking interactions and creating polynomials at the same time! Have a look at how many columns we get using `np.shape`. Quite a few!
+What you're essentially doing is taking interactions and creating polynomials at the same time! Have a look at how many columns we get using `np.shape()`! 
 
 
 
 ```python
-from sklearn.preprocessing import PolynomialFeatures\
-# your code here
-```
+# Your code here
+poly = None
 
-## Plot your overfitted model's training predictions against the actual data
+X_train_poly = None
+X_test_poly = None
+```
 
 
 ```python
-# your code here
+# Check the shape
 ```
 
-Wow, we almost get a perfect fit!
-
-## Calculate the bias and variance for the train set
+Fit a regression model to the training data: 
 
 
 ```python
-# your code here
+# Your code here
+polyreg = LinearRegression()
 
-# Bias: -2.5421584029769207e-16 
-# Variance: 0.07230707736656222
 ```
 
-## Plot your overfitted model's test predictions against the actual data.
+Use the model to make predictions on both the training and test sets: 
 
 
 ```python
-# your code here
+# Training set predictions
+poly_train_predictions = None
+
+# Test set predictions 
+poly_test_predictions = None
 ```
 
-##  Calculate the bias and variance for the test set.
+Plot predictions for the training set against the actual data: 
 
 
 ```python
-# your code here
-
-# Bias: -0.16998568902304564 
-# Variance: 0.3596092440273582
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_train, poly_train_predictions, label='Model')
+plt.plot(y_train, y_train, label='Actual data')
+plt.title('Model vs data for training set')
+plt.legend();
 ```
 
-## Describe what you notice about the bias and variance statistics for your overfit model
+Plot predictions for the test set against the actual data: 
+
+
+```python
+# Run this cell - vertical distance between the points and the line denote the errors
+plt.figure(figsize=(8, 5))
+plt.scatter(y_test, poly_test_predictions, label='Model')
+plt.plot(y_test, y_test, label='Actual data')
+plt.title('Model vs data for test set')
+plt.legend();
+```
+
+Calculate the bias and variance for the training set: 
+
+
+```python
+# Bias and variance for training set 
+b = None 
+v = None 
+print('Train bias: {} \nTrain variance: {}'.format(b, v))
+
+# Train bias: 3.5898251966996625e-07 
+# Train variance: 7394168636697528.0
+```
+
+Calculate the bias and variance for the test set: 
+
+
+```python
+# Bias and variance for test set 
+b = None 
+v = None 
+print('Test bias: {} \nTest variance: {}'.format(b, v))
+
+# Test bias: -68166032.47666144 
+# Test variance: 4.798244829435879e+16
+```
+
+## Interpret the overfit model
 
 
 ```python
 # Your description here
 ```
 
-## Level Up - Optional
+## Level Up (Optional)
 
-In this lab we went from 4 predictors to 35 by adding polynomials and interactions, using `PolynomialFeatures`. That being said, where 35 leads to overfitting, there are probably ways to improve by just adding a few polynomials. Feel free to experiment and see how bias and variance improve!
+In this lab we went from 4 predictors to 35 by adding polynomials and interactions, using `PolynomialFeatures`. That being said, where 35 leads to overfitting, there are probably ways to improve by adding just a few polynomials. Feel free to experiment and see how bias and variance improve!
 
 ## Summary
 
-This lab gave you insight into how bias and variance change for a training and a test set by using a pretty "simple" model, and a very complex model. 
+This lab gave you insight into how bias and variance change for a training and a test set by using both simple and complex models. 
