@@ -1,4 +1,3 @@
-
 # Bias-Variance Tradeoff - Lab
 
 ## Introduction
@@ -54,20 +53,23 @@ y = None
 X_train , X_test, y_train, y_test = None
 ```
 
-Use the `MinMaxScaler` to scale the training set. Remember you can fit and transform in a single method using `.fit_transform()`.  
-
 
 ```python
-# Transform with MinMaxScaler
+# create a scaler
 scaler = None
-X_train_scaled = None
 ```
 
-Transform the test data (`X_test`) using the same `scaler`:  
+Use the `MinMaxScaler` to scale the training set. Remember you can fit and transform in a single method using `.fit_transform()`.  
+
+Then, use `.transform()` to apply the scaler to the test set.
 
 
 ```python
-# Scale the test set
+# fit and transform X_train
+# X_train_scaled = scaler.fit_transform(X_train)
+X_train_scaled = None
+
+# transform X_test
 X_test_scaled = None
 ```
 
@@ -76,7 +78,12 @@ X_test_scaled = None
 
 ```python
 # Your code 
+
+# create an instance of linear regression
 linreg = None
+
+# fit the model to X_train and y_train
+
 ```
 
 Use the model to make predictions on both the training and test sets: 
@@ -142,9 +149,9 @@ def variance(y_hat):
 # Bias and variance for training set 
 b = None
 v = None
-print('Train bias: {} \nTrain variance: {}'.format(b, v))
+print(f'Train bias: {b} \nTrain variance: {v}')
 
-# Train bias: -8.127906105735085e-09 
+# Train bias: -4.063953052867542e-09 
 # Train variance: 3406811040986517.0
 ```
 
@@ -153,7 +160,7 @@ print('Train bias: {} \nTrain variance: {}'.format(b, v))
 # Bias and variance for test set 
 b = None
 v = None
-print('Test bias: {} \nTest variance: {}'.format(b, v))
+print(f'Test bias: {b} \nTest variance: {v}')
 
 # Test bias: -10982393.918069275 
 # Test variance: 1518678846127932.0
@@ -237,7 +244,7 @@ b = None
 v = None 
 print('Train bias: {} \nTrain variance: {}'.format(b, v))
 
-# Train bias: 3.5898251966996625e-07 
+# Train bias: -2.0997090773148971e-07
 # Train variance: 7394168636697528.0
 ```
 
