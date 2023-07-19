@@ -458,8 +458,8 @@ b = None
 v = None
 print(f'Train bias: {b} \nTrain variance: {v}')
 
-# Train bias: -4.063953052867542e-09 
-# Train variance: 3406811040986517.0
+# Train bias (approximate): -4.063953052867542e-09 
+# Train variance (approximate): 3406811040986517.0
 ```
 
 
@@ -505,7 +505,7 @@ Use `PolynomialFeatures` with degree 3 and transform `X_train_scaled` and `X_tes
 
 **Important note:** By including this, you don't only take polynomials of single variables, but you also combine variables, eg:
 
-$ \text{Budget} * \text{MetaScore} ^ 2 $
+*Budget* times *MetaScore* squared
 
 What you're essentially doing is taking interactions and creating polynomials at the same time! Have a look at how many columns we get using `np.shape()`! 
 
@@ -658,8 +658,8 @@ b = None
 v = None 
 print('Train bias: {} \nTrain variance: {}'.format(b, v))
 
-# Train bias: -2.0997090773148971e-07
-# Train variance: 7394168636697528.0
+# Train bias (approximate): -2.0997090773148971e-07
+# Train variance (approximate): 7394168636697528.0
 ```
 
 
