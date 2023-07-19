@@ -364,7 +364,7 @@ Use `PolynomialFeatures` with degree 3 and transform `X_train_scaled` and `X_tes
 
 **Important note:** By including this, you don't only take polynomials of single variables, but you also combine variables, eg:
 
-$ \text{Budget} * \text{MetaScore} ^ 2 $
+*Budget* times *MetaScore* squared
 
 What you're essentially doing is taking interactions and creating polynomials at the same time! Have a look at how many columns we get using `np.shape()`! 
 
